@@ -50,3 +50,291 @@
 		</script>
 	</body>
 </html>
+=======
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Research Data Management: The Asian Seabass genome at SANBI</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+<!--
+L. calcirifer:
+
+https://upload.wikimedia.org/wikipedia/commons/7/75/Lates_calcarifer%2C_2014-09-19.JPG
+
+
+extract DNA:
+
+http://blogs.egu.eu/network/palaeoblog/files/2012/10/strawberry-dna.jpg
+
+DNA sequencer:
+
+https://upload.wikimedia.org/wikipedia/commons/8/88/DNA-Sequencers_from_Flickr_57080968.jpg
+
+how we got the data: input data ~ about 20 GB 
+
+how we stored the data
+
+per-project workspace
+
+version control for software - tracks edits and provenance of edit
+
+ideal: turnkey workflow for data
+
+reality: scripts, manually executed steps, run1, run2, run3
+
+SANBI analysis cluster: moving things between clusters
+
+storing the results: "1 year storage"
+
+structuring the results: relational database
+
+publishing: bassex, flat files: ~ 3 GB
+
+"5 year storage": data publishing
+long term future for bassex? 
+
+code publishing: reproducible research (and its limits)
+
+
+-->
+		<div class="reveal">
+			<div class="slides">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<section data-markdown>
+			<script type="text/template">
+			## The Asian Seabass genome project
+			#### An example of Research Data Management at SANBI
+			 <small>Peter van Heusden (pvh@sanbi.ac.za)<br/>
+               August 2015</small>
+			</script>
+			</section>
+
+		      <section>
+		      <img style="border: 0px; box-shadow: 0 0 0 0" width="50%" src="images/GenomicDataScience.svg" alt="Genomic Data Science"/>
+		      <h3>What we do</h3>
+		      <aside class="notes">
+		What are we doing?
+
+		data science workflow
+
+		* Access, gather, analyse, publish data
+		      </aside>
+		      </section>
+
+		      <section>
+		      <img src="images/fish_to_sequence.jpg" alt="L. calcarifer to sequence"/>
+		      <aside class="notes">
+		      Fish DNA was extracted and sequenced by our collaborators (Laszlo Orban) at Temasek Lifesciences Laboratory in Singapore
+		      </aside>
+		      </section>
+
+		      <section>
+		      <section>
+		      <img src="images/seabass_drive.jpg" alt="Portable harddrive containing Asian seabass data"/>
+		      <aside class="notes">
+		      In June 2014, hard disk containing 20 GB of assembled seabass data arrived at SANBI.
+		      </aside>
+		      </section>
+		      <section>
+		      <pre><code>
+>scaffold_1
+TGCTTTTCTGAGATTTATGTCAGCTCCCCATTGGGAGATACAGGAGAATC
+CAATATATTCCTGTCTCGCTTCTTTTATATTTATCCTTTCTACACCTGAC
+ATCCTCAGTGATTGAAGTGACAAAAAGTGGAGCGCACGCAGTGGTCATTA
+CCCTCCAATGGTACTTCTAATTAAGGAAAGATTTTTTGCATTCACTGAGC
+AAAACACTTATTTGCATGAATGGAAAATCATAAATGAGGGGTCCATTAAA
+CAAATTTCCTAATTGTTTGCTTTTTTTTCTTCCTACTTCACCATCCCTCT
+AAAGCTATTACTCTCTATTCTACCCCATTATCGAGTGCACAAACACCAGC
+CCCAAATTGTCTTATCTCTGCTTTGATAAATGATATTTTTTTCTCTTATA
+ATTGTGTTTCTCTCTAGATGTGCGGTGTCCATCAAGACACTGGATGTCAC
+GTGGTCACTCCTGTGAAGAGCGAACTGTGTGGAACCCGAAGTACTGTGTG
+GTTGCTGACTGTCAGATGCTGCTTCTGAATGAGGAGGAGGTGGTGAGAGC
+AGACAGCACAATCTCTTGTCTGGCATGTTCCTCTGTGTCACCATTGTCTC
+TCTCATCTGCTCGTGTGTGTGTGTGTGTGTGTCCTTGTCAATGTCATTAC
+ACAATTTATGTTGGTGCACTGCATGTCAGAGTCTGAACTTTGTTGGACAT
+		      </code></pre>
+		      </section>
+
+		      </section>
+
+		      <section>
+		      <img src="images/sanbi_drives.jpg" alt="SANBI disk array"/>
+		      <aside class="notes">
+		      Data is stored on SANBI's disk array (next generation pictured here) organised into a project folder in
+		      shared disk storage. By the end of the project this shared workspace contained 632 GB of data.
+		      </aside>
+		      </section>
+
+		      <section>
+		      <img src="images/sanbi_cluster.jpg" alt="SANBI cluster"/>
+		      <aside class="notes">
+		      Where did all this extra data come from? 1. Contributed from publicly available data sources and 2. generated from analysis that split, recombine, copy and transform incoming data.
+		      </section>
+
+		      <section>
+		      <img src="images/galaxy.jpg" alt="Galaxy workflow"/>
+		      <p>An idealised bioinformatics data pipeline</p>
+		      <aside class="notes">
+		      Ideally all computational research is reproducible. We should have a turnkey solution where
+		      we input initial data, hit go, and let the computers do the work. Scientific workflow
+		      management systems promise to enable this.
+		      </aside>
+		      </section>
+
+		      <section>
+		      <img src="images/gene_build_readme.png" width="90%" alt="Gene build README screenshot"/>
+		      <p>A description of the real world data pipeline</p>
+		      <aside class="notes">
+		      Unfortunately available scientific workflow management systems currently lack the power, control and 
+		      efficiency necessary for our data analysis. The reality is a system of scripts that embody stages
+		      of the pipeline, manually executed, with their execution tracked in READMEs (that you hope are comprehensive).
+		      
+		      In addition, data analysis tends to move between clusters - SANBI, CHPC and UWC Astrophysics.
+		      </aside>
+		      </section>
+
+		      <section>
+		      <img src="images/bitbucket.png" alt="Bitbucket source code repository"/>
+		      <p>Analysis source code is easily tracked using version control</p>
+		      <aside class="notes">
+		      Workflow scripts (and READMEs) are synchronised with version control system (git/bitbucket.org) that
+		      tracks edits (versioning) and provenance of changes.
+		      </aside>
+		      </section>
+		      <section>
+		      <img src="images/SANBI_disk_usage.png" alt="SANBI disk usage"/>
+		      <p>Data is largely managed as aggregate "disk usage"</p>
+		      <aside class="notes">
+		      How to manage all this data? Current data management is focused on aggregate of disk space (metric
+		      is availability). To be
+		      honest no one outside the project knows what the different data collections comprise of. Within
+		      the project disk usage is (at best) documented in READMEs or (at worst) ephemeral email exchanges. Project storage aggregates "1 week storage" (data immediately in use for analysis) and "1 year storage" (data used to feed into the analysis goals of the project as a whole), the distinction is not managed.
+		      </aside>
+		      </section>
+
+		      <section>
+		      <img src="images/db_schema.png" alt="Seabass relational database schema"/>
+		      <p>Results extracted from flat files populate a relational database</p>
+		      <aside class="notes">
+		      As data accumulates, results are extracted from flat files and structured into a relational 
+		      database.
+		      </aside>
+		      </section>
+
+		      <section>
+		      <img src="images/seabass_jbrowse.png" alt="Seabass genome browser"/>
+		      <p>A genome browser helps visualise predicted genes</p>
+		      <aside class="notes">
+		      And "genome features" visualised in a genome browser. Visualisation forms a key part of data
+		      analysis and quality control.
+		      </aside>
+		      </section>
+
+		      <section>
+		      <img src="images/bassex.png" alt="Bass Explorer web portal"/>
+		      <p>The Bass Explorer web portal</p>
+		      <aside class="notes">
+		      And finally the output of the project is published using a web portal. Raw data outputs are 
+		      also published to the NCBI Genbank repository. What to do with data that is not published to
+		      Genbank? Historically data has been published on SANBI FTP site, but this is not very 
+		      findable and not very durable. For data supporting paper, Datadryad is an option, also Figshare: data
+		      publication is a new field for SANBI.
+		      </aside>
+		      </section>
+
+		      <section>
+		      <img style="border: 0px; box-shadow: 0 0 0 0" width="50%" src="images/GenomicDataScience.svg" alt="Genomic Data Science"/>
+		      <h3>What we do (again)</h3>
+		      <aside class="notes">
+		What are we doing?
+
+		data science workflow
+
+		* Access, gather, analyse, publish data
+		      </aside>
+		      </section>
+
+		      <section>
+		      <img src="images/IT_team.jpg" alt="The SANBI IT team"/>
+		      <aside class="notes">
+		      Who does this? SANBI benefits from an experienced team providing research support through
+		      software development and continuity. Our metric is output, not just uptime. Currently the only
+		      "e-Research" team on campus as far as I know.
+		      </aside>
+		      </section>
+
+		      <section>
+		      <img style="border: 0px; box-shadow: 0 0 0 0; vertical-align: middle" src="images/SANBIlogo.png" alt="SANBI logo"/>
+		      <img style="border: 0px; box-shadow: 0 0 0 0; vertical-align: middle" width="20%" src="images/UWClogo.png" alt="UWC logo"/>
+		      <img style="border: 0px; box-shadow: 0 0 0 0; vertical-align: top" src="images/tll_logo.png" alt="Temasek Lifesciences Laboratory logo"/>
+		      <aside class="notes">
+		      SANBI (Prof Alan Christoffels), UWC, TEMASEK Lifesciences Laboratory (Dr Laszlo Orban)
+		      </aside>
+		      </section>
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
